@@ -5,7 +5,7 @@ android {
     buildToolsVersion '30.0.3'
     ndkVersion '17.2.4988734'
     defaultConfig {
-        applicationId "com.m2049r.xmrwallet"
+        applicationId "com.m2049r.wowwallet"
         minSdkVersion 21
         targetSdkVersion 31
         versionCode 3100

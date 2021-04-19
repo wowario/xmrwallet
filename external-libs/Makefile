@@ -41,7 +41,7 @@ include:
 	mkdir include
 
 VERSION:
-	echo MONERUJO_$(FLAVOUR) `git -C . branch | grep "^\*" | sed 's/^..//'` with $(FLAVOUR) `git -C $(FLAVOUR) branch | grep "^\*" | sed 's/^..//'` > VERSION
+	echo MONERUJO_WOW `git -C . branch | grep "^\*" | sed 's/^..//'` with WOWMONERO `git -C monero branch | grep "^\*" | sed 's/^..//'` > VERSION
 
 clean:
 	-rm -rf arm64-v8a
