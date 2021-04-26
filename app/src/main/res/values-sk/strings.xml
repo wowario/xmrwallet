@@ -135,7 +135,7 @@
 
     <string name="xmr_unconfirmed_amount">+ %1$s WOW nepotvrdených</string>
 
-    <string name="service_description">monerujoWOW Service</string>
+    <string name="service_description">wonerujo Service</string>
 
     <string name="status_synced">Synchronizované:</string>
     <string name="status_remaining">zostávajúcich blokov</string>
@@ -163,9 +163,9 @@
     <string name="generate_fingerprint_warn"><![CDATA[
         <strong>Overenie odtlačkom prsta</strong>
         <p>Pomocou overenia odtlačkom prsta, môžeš vidieť zostatok a prijímať prostriedky, bez zadávania hesla.</p>
-        <p>Avšak kvôli zvýšeniu bezpečnosti, monerujoWOW bude stále vyžadovať heslo na zobrazenie detailov peňaženky a posielanie.</p>
+        <p>Avšak kvôli zvýšeniu bezpečnosti, wonerujo bude stále vyžadovať heslo na zobrazenie detailov peňaženky a posielanie.</p>
         <strong>Bezpečnostné Varovanie</strong>
-        <p>monerujoWOW Ti chce pripomenúť, že ktokoľvek kto získa prístup k Tvojim odtlačkom, bude schopný nazrieť do tvojej peňaženky.</p>
+        <p>wonerujo Ti chce pripomenúť, že ktokoľvek kto získa prístup k Tvojim odtlačkom, bude schopný nazrieť do tvojej peňaženky.</p>
         <p>Napríklad záškodník niekde v blízkosti môže otvoriť Tvoju peňaženku keď spíš.</p>
         <strong>Si si istý, že chceš povoliť túto funkciu?</strong>
     ]]></string>
@@ -368,12 +368,12 @@
     <string name="onboarding_button_next">Next</string>
     <string name="onboarding_button_ready">I\'m ready!</string>
 
-    <string name="onboarding_welcome_title">Welcome to monerujoWOW!</string>
+    <string name="onboarding_welcome_title">Welcome to wonerujo!</string>
     <string name="onboarding_welcome_information">This app allows you to create and use WOW wallets. You can store your sweet WOW in them.</string>
     <string name="onboarding_seed_title">Keep your seed safe</string>
     <string name="onboarding_seed_information">The seed grants full access to whoever has it. If you lose it, we cannot help you recover it and you lose your beloved WOW.</string>
     <string name="onboarding_xmrto_title">Send Crypto</string>
-    <string name="onboarding_xmrto_information">monerujoWOW has SideShift.ai support built-in. Just paste or scan a BTC, LTC, ETH, DASH or DOGE address and you\'ll be sending these cryptos by spending WOW.</string>
+    <string name="onboarding_xmrto_information">wonerujo has SideShift.ai support built-in. Just paste or scan a BTC, LTC, ETH, DASH or DOGE address and you\'ll be sending these cryptos by spending WOW.</string>
     <string name="onboarding_nodes_title">Nodes, your way</string>
     <string name="onboarding_nodes_information">Nodes connect you to the WOW network. Choose between public nodes or go full cypherpunk using your own.</string>
     <string name="onboarding_fpsend_title">Send with fingerprint</string>

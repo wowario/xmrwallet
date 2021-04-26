@@ -91,7 +91,7 @@
         unei noi parole (inclusiv una folosită anterior) aplicația va genera un CrAzYpass pentru
         tine și va securiza fișierele portofelului cu ajutorul lui. Notează-l!
         <h3>Portofele CrAzYpass</h3>
-        Dacă dorești să reinstalezi MonerujoWOW (ca exemplu, după resetarea telefonului sau trecerea
+        Dacă dorești să reinstalezi wonerujo (ca exemplu, după resetarea telefonului sau trecerea
         la unul nou) sau dorești să utilizezi fișierele portofelului pe un alt dispozitiv sau PC, folosește
         Parola de Recuperare pentru a accesa portofelul din nou.<br/>
         La selectarea \"Schimbă Parola\" din meniu, poți alege o parolă nouă. Aceasta va genera
@@ -107,14 +107,14 @@
     <string name="help_list"><![CDATA[
         <h1>Listă Portofele</h1>
         <h2>Nod</h2>
-        <p>MonerujoWOW folosește un dispozitiv la distanță (remote node) pentru a comunica cu Rețeaua WOW
+        <p>wonerujo folosește un dispozitiv la distanță (remote node) pentru a comunica cu Rețeaua WOW
 	fără a descărca și a stoca o copie a întregii baze de date distribuite (blockchain). Poți găsi o listă
 	populară de noduri de asamblare aflate la distanța, sau despre cum să creezi un nod de asamblare personal,
 	la adresa https://tinyurl.com/wownodes/<p>
-        <p>MonerujoWOW vine cu o listă presetată de noduri de asamblare aflate la distanță (remote nodes).
-	De asemenea, MonerujoWOW reține ultimele cinci noduri folosite.</p>
+        <p>wonerujo vine cu o listă presetată de noduri de asamblare aflate la distanță (remote nodes).
+	De asemenea, wonerujo reține ultimele cinci noduri folosite.</p>
         <h2>Portofele</h2>
-        <p>Aici sunt afișate portofelele tale. Ele sunt salvate în dosarul <tt>monerujoWOW</tt> aflat în
+        <p>Aici sunt afișate portofelele tale. Ele sunt salvate în dosarul <tt>wonerujo</tt> aflat în
 	memoria internă a dispozitivului tău. Poți să utilizezi un manager de fișiere pentru a le vedea.
 	Ar trebui să efectuezi, în mod regulat, copii de siguranță ale acestui dosar pe alte dispozitive,
 	în cazul în care dispozitivul tău va avea o disfuncționalitate sau va fi furat.</p>
@@ -127,7 +127,7 @@
         <h3>Redenumește</h3>
         <p>Redenumește portofelul. Copiile de siguranță (backups) nu sunt redenumite în această operațiune.</p>
         <h3>Copie de siguranță</h3>
-        <p>Creează o copie de siguranță în dosarul <tt>backups</tt> aflat în dosarul <tt>monerujoWOW</tt> 
+        <p>Creează o copie de siguranță în dosarul <tt>backups</tt> aflat în dosarul <tt>wonerujo</tt> 
 	suprascriind copiile anterioare.</p>
         <h3>Arhivează</h3>
         <p>Efectuează o copie de siguranță și apoi șterge fișierul portofelului. Copia va rămâne
@@ -171,8 +171,8 @@
         <h1>Transfer BTC</h1>
         <h2>SideShift.ai</h2>
         <p>SideShift.ai este un serviciu terță parte care acționează ca un schimb valutar între WOW și Bitcoin.
-        Noi folosim API-ul SideShift.ai pentru a integra plățile Bitcoin în MonerujoWOW. Vezi
-        https://sideshift.ai și decide singur dacă acesta este un serviciu pe care dorești să îl folosești. Echipa MonerujoWOW
+        Noi folosim API-ul SideShift.ai pentru a integra plățile Bitcoin în wonerujo. Vezi
+        https://sideshift.ai și decide singur dacă acesta este un serviciu pe care dorești să îl folosești. Echipa wonerujo
         nu este asociată în niciun fel cu SideShift.ai și nu te poate ajuta cu serviciile oferite de ei.</p>
         <h2>Rata de schimb a SideShift.ai<h2>
         <p>Pe ecranul cu \"Suma\" vor fi afișați parametrii serviciului SideShift.ai. Aceștia includ cursul de
@@ -183,7 +183,7 @@
 	un timp limitat - este posibil să observi o numărătoare inversă pe butonul \"Consum\". Rata de schimb poate
 	fi diferită de cea indicată pe ecranele anterioare.</p>
         <h2>Cheia secretă SideShift.ai<h2>
-        <p>Din moment ce MonerujoWOW gestionează numai partea WOW din tranzacția ta, cheia secretă a SideShift.ai
+        <p>Din moment ce wonerujo gestionează numai partea WOW din tranzacția ta, cheia secretă a SideShift.ai
         poate fi folosită pentru a urmări partea Bitcoin a comenzii tale de pe site-ul SideShift.ai.</p>
         <h2>Numerotarea inversă SideShift.ai</h2>
         <p>În momentul în care numerotarea inversă ajunge la zero, va trebui să obții o nouă cotație de la SideShift.ai mergând
@@ -194,8 +194,8 @@
         <h1>Transfer BTC</h1>
         <h2>SideShift.ai</h2>
         <p>SideShift.ai este un serviciu terță parte care acționează ca un schimb valutar între WOW și Bitcoin.
-        Noi folosim API-ul SideShift.ai pentru a integra plățile Bitcoin în MonerujoWOW. Vezi
-        https://sideshift.ai și decide singur dacă acesta este un serviciu pe care dorești să îl folosești. Echipa MonerujoWOW
+        Noi folosim API-ul SideShift.ai pentru a integra plățile Bitcoin în wonerujo. Vezi
+        https://sideshift.ai și decide singur dacă acesta este un serviciu pe care dorești să îl folosești. Echipa wonerujo
         nu este asociată în niciun fel cu SideShift.ai și nu te poate ajuta cu serviciile oferite de ei.</p>
         <h2>Rata de schimb a SideShift.ai<h2>
         <p>Pe ecranul cu \"Suma\" vor fi afișați parametrii serviciului SideShift.ai. Aceștia includ cursul de
@@ -206,7 +206,7 @@
 	un timp limitat - este posibil să observi o numărătoare inversă pe butonul \"Consum\". Rata de schimb poate
 	fi diferită de cea indicată pe ecranele anterioare.</p>
         <h2>Cheia secretă SideShift.ai<h2>
-        <p>Din moment ce MonerujoWOW gestionează numai partea WOW din tranzacția ta, cheia secretă a SideShift.ai
+        <p>Din moment ce wonerujo gestionează numai partea WOW din tranzacția ta, cheia secretă a SideShift.ai
         poate fi folosită pentru a urmări partea Bitcoin a comenzii tale de pe site-ul SideShift.ai.</p>
         <h2>Numerotarea inversă SideShift.ai</h2>
         <p>În momentul în care numerotarea inversă ajunge la zero, va trebui să obții o nouă cotație de la SideShift.ai mergând
@@ -222,7 +222,7 @@
         să poți vizualiza scumpul WOW trimis/primit!</p>
         <h2>Scanarea</h2>
         Deoarece WOW păstrează lucrurile într-un mod privat, de fiecare dată când deschizi
-	portofelul MonerujoWOW, vom scana baza de date distribuită (blockchain) pentru a vedea dacă
+	portofelul wonerujo, vom scana baza de date distribuită (blockchain) pentru a vedea dacă
 	ai primit WOW în portofel, această metodă stochează doar informații relevante portofelului tău.
 	Uneori poate dura ceva timp, fiindcă portofelul n-a fost sincronizat demult.
         <h2>Balanța</h2>
@@ -239,14 +239,14 @@
     <string name="help_node"><![CDATA[
         <h1>Noduri</h1>
         <h2>TL;DR</h2>
-        <p>Actualizează lista de noduri prin tragerea în jos &amp; marchează 3&#8211;5 noduri pentru a permite lui MonerujoWOW
+        <p>Actualizează lista de noduri prin tragerea în jos &amp; marchează 3&#8211;5 noduri pentru a permite lui wonerujo
         să-l aleagă pe cel mai bun!</p>
         <h2>Ce este un Nod?</h2>
-        <p>MonerujoWOW folosește un nod la distanță (cunoscut și ca Daemon) pentru a comunica cu
+        <p>wonerujo folosește un nod la distanță (cunoscut și ca Daemon) pentru a comunica cu
         Rețeaua WOW fără a descărca și stoca o copie a
         întregului blockchain.<p>
         <h2>Listă Noduri</h2>
-        <p>Dacă lista este goală, fie adaugi manual noduri noi sau îl lași pe MonerujoWOW
+        <p>Dacă lista este goală, fie adaugi manual noduri noi sau îl lași pe wonerujo
         să scaneze rețeaua pentru tine. Sau ambele. Mai mullt&#8230;</p>
         <p>Lista de noduri conține toate nodurile cunoscute în prezent. Mai mult, marca temporală
         a ultimului monobloc cunoscută fiecărui nod este afișată sub numele nodului. Calitatea răspunsului
@@ -254,10 +254,10 @@
         plasată lângă fiecare nod.</p>
         <p>Orice nod din listă poate fi marcat pentru a fi utilizat mai târziu.
         Nodurile care nu sunt marcate vor fi uitate.<p>
-        <p>MonerujoWOW va selecta nodul optim marcat la fiecare utilizare.
+        <p>wonerujo va selecta nodul optim marcat la fiecare utilizare.
         Aceasta are loc atât prin verificarea numărului monoblocului (cât de actual
         e nodul?), cât și prin calitatea răspunsului nodului (cât de repede sunt procesate cererile?).</p>
-        <p>Lista e sortată după aceste caracteristici, așă că acum MonerujoWOW va alege nodul
+        <p>Lista e sortată după aceste caracteristici, așă că acum wonerujo va alege nodul
         cel mai bun. Josul listei va conține noduri foarte lente sau indisponibile.</p>
         <h2>Adaugă un Nod</h2>
         <p>La atingerea butonului &quot;Adaugă Nod&quot; din josul ecranului, va trebui
@@ -275,12 +275,12 @@
         Odată ce testarea e pozitivă (fără erori) - atinge &quot;OK&quot; pentru a salva &amp;
         marca acest nod.</p>
         <h2>Scanare Noduri</h2>
-        <p>În plus, poți scana rețeaua pentru noduri. MonerujoWOW va începe
+        <p>În plus, poți scana rețeaua pentru noduri. wonerujo va începe
         scanarea rețelei pentru noduri la distanță cu portul 18089. Primele sunt solicitate
         nodurile marcate, care vor furniza alți parteneri în rețeaua P2P WOW care, la rândul lor,
         vor căuta alții, și așa mai departe. Dacă nu ai noduri marcate
         (sau ele nu comunică informația partenerilor),
-        MonerujoWOW va accesa nodurile integrate în WOW. Scanarea
+        wonerujo va accesa nodurile integrate în WOW. Scanarea
         se finalizează odată ce s-au găsit 10 noduri la distanță.</p>
     ]]></string>
 
@@ -288,7 +288,7 @@
 
     <string name="help_uri"><![CDATA[
         <h1>Utilizarea unui link de plată</h1>
-        <p>Ai accesat monerujoWOW cu un link de plată. Pentru a trimite fonduri, te rugăm să efectuezi următoarele:</p>
+        <p>Ai accesat wonerujo cu un link de plată. Pentru a trimite fonduri, te rugăm să efectuezi următoarele:</p>
         <p>
         1. Deschide portofelul pe care dorești să-l folosești<br>
         2. Așteaptă să se sincronizeze portofelul &amp; butonul "Trimite" va fi disponibil<br>
