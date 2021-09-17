@@ -128,7 +128,7 @@
             android:layout_marginTop="@dimen/header_top_first"
             android:visibility="gone"
             app:counterEnabled="true"
-            app:counterMaxLength="95"
+            app:counterMaxLength="97"
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
