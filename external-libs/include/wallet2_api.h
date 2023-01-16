@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2022, The Monero Project
+// Copyright (c) 2014-2020, The Monero Project
 // 
 // All rights reserved.
 // 
@@ -66,6 +66,47 @@ enum NetworkType : uint8_t {
         bool set;
     };
 
+/*
+ * @brief Transaction construction data
+ */
+struct TransactionConstructionInfo
+{
+    struct Input {
+        Input(uint64_t _amount, const std::string &_pubkey);
+        const uint64_t amount;
+        const std::string pubkey;
+    };
+
+    struct Output {
+        Output(uint64_t _amount, const std::string &_address);
+        const uint64_t amount;
+        const std::string address;
+    };
+
+    virtual ~TransactionConstructionInfo() = 0;
+    virtual uint64_t unlockTime() const = 0;
+    virtual std::set<std::uint32_t> subaddressIndices() const = 0;
+    virtual std::vector<std::string> subaddresses() const = 0;
+    virtual uint64_t minMixinCount() const = 0;
+    virtual std::vector<Input> inputs() const = 0;
+    virtual std::vector<Output> outputs() const = 0;
+};
+
+
+/*
+* @brief Detailed pending transaction information
+*/
+struct PendingTransactionInfo
+{
+    virtual ~PendingTransactionInfo() = 0;
+    virtual uint64_t fee() const = 0;
+    virtual uint64_t dust() const = 0;
+    virtual bool dustAddedToFee() const = 0;
+    virtual std::string txKey() const = 0;
+    virtual TransactionConstructionInfo * constructionData() const = 0;
+};
+
+
 /**
  * @brief Transaction-like interface for sending money
  */
@@ -101,6 +142,13 @@ struct PendingTransaction
     virtual uint64_t txCount() const = 0;
     virtual std::vector<uint32_t> subaddrAccount() const = 0;
     virtual std::vector<std::set<uint32_t>> subaddrIndices() const = 0;
+    virtual std::string unsignedTxToBin() const = 0;
+    virtual std::string unsignedTxToBase64() const = 0;
+    virtual std::string signedTxToHex(int index) const = 0;
+    virtual size_t signedTxSize(int index) const = 0;
+    virtual PendingTransactionInfo * transaction(int index) const = 0;
+    virtual void refresh() = 0;
+    virtual std::vector<PendingTransactionInfo*> getAll() const = 0;
 
     /**
      * @brief multisigSignData
@@ -160,6 +208,9 @@ struct UnsignedTransaction
     * return - true on success
     */
     virtual bool sign(const std::string &signedFileName) = 0;
+    virtual void refresh() = 0;
+    virtual std::vector<TransactionConstructionInfo*> getAll() const = 0;
+    virtual TransactionConstructionInfo * transaction(int index) const = 0;
 };
 
 /**
@@ -198,6 +249,7 @@ struct TransactionInfo
     virtual std::string paymentId() const = 0;
     //! only applicable for output transactions
     virtual const std::vector<Transfer> & transfers() const = 0;
+    virtual const std::vector<std::pair<std::string, std::vector<uint64_t>>> & rings() const = 0;
 };
 /**
  * @brief The TransactionHistory - interface for displaying transaction history
@@ -260,22 +312,66 @@ struct AddressBook
     virtual int lookupPaymentID(const std::string &payment_id) const = 0;
 };
 
+/**
+ * @brief The CoinsInfo - interface for displaying coins information
+ */
+struct CoinsInfo
+{
+    virtual ~CoinsInfo() = 0;
+
+    virtual uint64_t blockHeight() const = 0;
+    virtual std::string hash() const = 0;
+    virtual size_t internalOutputIndex() const = 0;
+    virtual uint64_t globalOutputIndex() const = 0;
+    virtual bool spent() const = 0;
+    virtual bool frozen() const = 0;
+    virtual uint64_t spentHeight() const = 0;
+    virtual uint64_t amount() const = 0;
+    virtual bool rct() const = 0;
+    virtual bool keyImageKnown() const = 0;
+    virtual size_t pkIndex() const = 0;
+    virtual uint32_t subaddrIndex() const = 0;
+    virtual uint32_t subaddrAccount() const = 0;
+    virtual std::string address() const = 0;
+    virtual std::string addressLabel() const = 0;
+    virtual std::string keyImage() const = 0;
+    virtual uint64_t unlockTime() const = 0;
+    virtual bool unlocked() const = 0;
+    virtual std::string pubKey() const = 0;
+    virtual bool coinbase() const = 0;
+};
+
+struct Coins
+{
+    virtual ~Coins() = 0;
+    virtual int count() const = 0;
+    virtual CoinsInfo * coin(int index)  const = 0;
+    virtual std::vector<CoinsInfo*> getAll() const = 0;
+    virtual void refresh() = 0;
+    virtual void setFrozen(int index) = 0;
+    virtual void thaw(int index) = 0;
+    virtual bool isTransferUnlocked(uint64_t unlockTime, uint64_t blockHeight) = 0;
+};
+
 struct SubaddressRow {
 public:
-    SubaddressRow(std::size_t _rowId, const std::string &_address, const std::string &_label):
+    SubaddressRow(std::size_t _rowId, const std::string &_address, const std::string &_label, bool _used):
         m_rowId(_rowId),
         m_address(_address),
-        m_label(_label) {}
+        m_label(_label),
+        m_used(_used) {}
  
 private:
     std::size_t m_rowId;
     std::string m_address;
     std::string m_label;
+    bool m_used;
 public:
     std::string extra;
     std::string getAddress() const {return m_address;}
     std::string getLabel() const {return m_label;}
     std::size_t getRowId() const {return m_rowId;}
+    bool isUsed() const {return m_used;}
 };
 
 struct Subaddress
@@ -382,7 +478,7 @@ struct WalletListener
     /**
      * @brief refreshed - called when wallet refreshed by background thread or explicitly refreshed by calling "refresh" synchronously
      */
-    virtual void refreshed() = 0;
+    virtual void refreshed(bool success) = 0;
 
     /**
      * @brief called by device if the action is required
@@ -423,6 +519,7 @@ struct WalletListener
 
 /**
  * @brief Interface for wallet operations.
+ *        TODO: check if /include/IWallet.h is still actual
  */
 struct Wallet
 {
@@ -459,6 +556,7 @@ struct Wallet
     virtual bool setDevicePin(const std::string &pin) { (void)pin; return false; };
     virtual bool setDevicePassphrase(const std::string &passphrase) { (void)passphrase; return false; };
     virtual std::string address(uint32_t accountIndex = 0, uint32_t addressIndex = 0) const = 0;
+    virtual bool subaddressIndex(std::string address, std::pair<uint32_t, uint32_t> &index) const = 0;
     std::string mainAddress() const { return address(0, 0); }
     virtual std::string path() const = 0;
     virtual NetworkType nettype() const = 0;
@@ -789,17 +887,22 @@ struct Wallet
     /**
      * @brief makeMultisig - switches wallet in multisig state. The one and only creation phase for N / N wallets
      * @param info - vector of multisig infos from other participants obtained with getMulitisInfo call
-     * @param threshold - number of required signers to make valid transaction. Must be <= number of participants
+     * @param threshold - number of required signers to make valid transaction. Must be equal to number of participants (N) or N - 1
      * @return in case of N / N wallets returns empty string since no more key exchanges needed. For N - 1 / N wallets returns base58 encoded extra multisig info
      */
     virtual std::string makeMultisig(const std::vector<std::string>& info, uint32_t threshold) = 0;
     /**
      * @brief exchange_multisig_keys - provides additional key exchange round for arbitrary multisig schemes (like N-1/N, M/N)
      * @param info - base58 encoded key derivations returned by makeMultisig or exchangeMultisigKeys function call
-     * @param force_update_use_with_caution - force multisig account to update even if not all signers contribute round messages
      * @return new info string if more rounds required or an empty string if wallet creation is done
      */
-    virtual std::string exchangeMultisigKeys(const std::vector<std::string> &info, const bool force_update_use_with_caution) = 0;
+    virtual std::string exchangeMultisigKeys(const std::vector<std::string> &info) = 0;
+    /**
+     * @brief finalizeMultisig - finalizes N - 1 / N multisig wallets creation
+     * @param extraMultisigInfo - wallet participants' extra multisig info obtained with makeMultisig call
+     * @return true if success
+     */
+    virtual bool finalizeMultisig(const std::vector<std::string>& extraMultisigInfo) = 0;
     /**
      * @brief exportMultisigImages - exports transfers' key images
      * @param images - output paramter for hex encoded array of images
@@ -864,6 +967,18 @@ struct Wallet
                                                    std::set<uint32_t> subaddr_indices = {}) = 0;
 
     /*!
+     * \brief createTransactionSingle creates transaction with single input
+     * \param key_image               key image as string
+     * \param dst_addr                destination address as string
+     * \param priority
+     * \return                        PendingTransaction object. caller is responsible to check PendingTransaction::status()
+     *                                after object returned
+     */
+
+    virtual PendingTransaction * createTransactionSingle(const std::string &key_image, const std::string &dst_addr,
+                                                         size_t outputs = 1, PendingTransaction::Priority = PendingTransaction::Priority_Low) = 0;
+
+    /*!
      * \brief createSweepUnmixableTransaction creates transaction with unmixable outputs.
      * \return                  PendingTransaction object. caller is responsible to check PendingTransaction::status()
      *                          after object returned
@@ -877,7 +992,27 @@ struct Wallet
     *                          after object returned
     */
     virtual UnsignedTransaction * loadUnsignedTx(const std::string &unsigned_filename) = 0;
-    
+
+    /*!
+     * \brief loadUnsignedTx  - creates transaction from unsigned tx string
+     * \return                - UnsignedTransaction object. caller is responsible to check UnsignedTransaction::status()
+     *                          after object returned
+     */
+    virtual UnsignedTransaction * loadUnsignedTxFromStr(const std::string &unsigned_tx) = 0;
+
+    /*!
+     * \brief loadUnsignedTx  - creates transaction from unsigned base64 encoded tx string
+     * \return                - UnsignedTransaction object. caller is responsible to check UnsignedTransaction::status()
+     *                          after object returned
+     */
+    virtual UnsignedTransaction * loadUnsignedTxFromBase64Str(const std::string &unsigned_tx_base64) = 0;
+
+    /*!
+     * \brief loadSignedTx    - creates transaction from signed tx file
+     * \return                - PendingTransaction object.
+     */
+    virtual PendingTransaction * loadSignedTx(const std::string &signed_filename) = 0;
+
    /*!
     * \brief submitTransaction - submits transaction in signed tx file
     * \return                  - true on success
@@ -928,15 +1063,29 @@ struct Wallet
      */
     virtual bool importOutputs(const std::string &filename) = 0;
 
-    /*!
-     * \brief scanTransactions - scan a list of transaction ids, this operation may reveal the txids to the remote node and affect your privacy
-     * \param txids            - list of transaction ids
-     * \return                 - true on success
-     */
-    virtual bool scanTransactions(const std::vector<std::string> &txids) = 0;
+    virtual bool importTransaction(const std::string &txid, std::vector<uint64_t> &o_indices, uint64_t height, uint8_t block_version, uint64_t ts, bool miner_tx, bool pool, bool double_spend_seen) = 0;
+
+    virtual std::string printBlockchain() = 0;
+    virtual std::string printTransfers() = 0;
+    virtual std::string printPayments() = 0;
+    virtual std::string printUnconfirmedPayments() = 0;
+    virtual std::string printConfirmedTransferDetails() = 0;
+    virtual std::string printUnconfirmedTransferDetails() = 0;
+    virtual std::string printPubKeys() = 0;
+    virtual std::string printTxNotes() = 0;
+    virtual std::string printSubaddresses() = 0;
+    virtual std::string printSubaddressLabels() = 0;
+    virtual std::string printAdditionalTxKeys() = 0;
+    virtual std::string printAttributes() = 0;
+    virtual std::string printKeyImages() = 0;
+    virtual std::string printAccountTags() = 0;
+    virtual std::string printTxKeys() = 0;
+    virtual std::string printAddressBook() = 0;
+    virtual std::string printScannedPoolTxs() = 0;
 
     virtual TransactionHistory * history() = 0;
     virtual AddressBook * addressBook() = 0;
+    virtual Coins * coins() = 0;
     virtual Subaddress * subaddress() = 0;
     virtual SubaddressAccount * subaddressAccount() = 0;
     virtual void setListener(WalletListener *) = 0;
@@ -993,7 +1142,8 @@ struct Wallet
     /*
      * \brief signMessage - sign a message with the spend private key
      * \param message - the message to sign (arbitrary byte data)
-     * \return the signature
+     * \param address - the address to make the signature with, defaults to primary address (optional)
+     * \return the signature, empty string if the address is invalid or does not belong to the wallet
      */
     virtual std::string signMessage(const std::string &message, const std::string &address = "") = 0;
     /*!
@@ -1036,7 +1186,6 @@ struct Wallet
     * \param offline - true/false
     */
     virtual void setOffline(bool offline) = 0;
-    virtual bool isOffline() const = 0;
     
     //! blackballs a set of outputs
     virtual bool blackballOutputs(const std::vector<std::string> &outputs, bool add) = 0;
@@ -1088,9 +1237,6 @@ struct Wallet
 
     //! shows address on device display
     virtual void deviceShowAddress(uint32_t accountIndex, uint32_t addressIndex, const std::string &paymentId) = 0;
-
-    //! attempt to reconnect to hardware device
-    virtual bool reconnectDevice() = 0;
 
     //! get bytes received
     virtual uint64_t getBytesReceived() = 0;
@@ -1203,6 +1349,25 @@ struct WalletManager
     {
         return createWalletFromKeys(path, password, language, testnet ? TESTNET : MAINNET, restoreHeight, addressString, viewKeyString, spendKeyString);
     }
+
+    /*!
+     * \brief  recover deterministic wallet from spend key.
+     * \param  path           Name of wallet file to be created
+     * \param  password       Password of wallet file
+     * \param  language       language
+     * \param  nettype        Network type
+     * \param  restoreHeight  restore from start height
+     * \param  spendKeyString spend key
+     * \param  kdf_rounds     Number of rounds for key derivation function
+     * \return                Wallet instance (Wallet::status() needs to be called to check if recovered successfully)
+     */
+    virtual Wallet * createDeterministicWalletFromSpendKey(const std::string &path,
+                                                           const std::string &password,
+                                                           const std::string &language,
+                                                           NetworkType nettype,
+                                                           uint64_t restoreHeight,
+                                                           const std::string &spendKeyString,
+                                                           uint64_t kdf_rounds = 1) = 0;
 
    /*!
     * \deprecated this method creates a wallet WITHOUT a passphrase, use createWalletFromKeys(..., password, ...) instead
@@ -1375,3 +1540,6 @@ struct WalletManagerFactory
 
 
 }
+
+namespace Bitmonero = Monero;
+
