@@ -9,7 +9,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 31
         versionCode 3100
-        versionName "3.1.0 'Fluorine Fermi'"
+        versionName "2.0.0 'Junkie Jeff'"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
