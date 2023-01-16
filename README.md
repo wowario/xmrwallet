@@ -10,7 +10,7 @@ The Android WOW Wallet
 Help us translate wonerujo! You can find instructions [On Taiga](https://taiga.getmonero.org/project/erciccione-monero-localization/wiki/wonerujo), and if you need help/support, open an issue or contact the Localization Workgroup. You can find us on the freenode channel `#monero-translations`, also relayed on [MatterMost](https://mattermost.getmonero.org/monero/channels/monero-translations), and matrix/riot.
 
 ### Disclaimer
-You may lose all your AEON if you use this App.
+You may lose all your WOW if you use this App.
 
 ### HOW TO BUILD
 Check out [the instructions](doc/BUILDING-external-libs.md)
